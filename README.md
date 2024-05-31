@@ -31,7 +31,8 @@ python3 -m venv .venv
 
 2. Activate Virtual Env:
 ```
-. .venv/bin/activate
+. .venv/bin/activate # for Linux, macOS
+.venv\Scripts\activate # for Windows
 ```
 
 3. Install dependencies:
