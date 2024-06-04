@@ -1,6 +1,13 @@
 # KranNet - Text Encoding Project
 *Alberto Saponaro, Francesca Carlon*
 
+## Description
+
+### Phases
+1. Collect
+2. Prepare
+3. Access
+
 ## Download datasets
 
 ### Carniolan Provincial Assembly corpus Kranjska 1.0:
