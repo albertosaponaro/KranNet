@@ -55,3 +55,24 @@ ___
 deactivate
 ```
 
+## How To Run
+The project is divided in three parts. To run them individually execute:
+
+1. Collect:
+    ```
+    bash collect.sh
+    ```
+2. Prepare:
+    ```
+    bash prepare.sh
+    ```
+3. Access:
+    ```
+    bash access.sh
+    ````
+
+To run the whole pipeline:
+```
+bash run.sh
+```
+
