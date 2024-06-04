@@ -1,18 +1,35 @@
 import re
 import json
-import os
+import os, argparse
+from pathlib import Path
 from collections import Counter
 from lxml import etree
+import utils
 
 
-# TODO - add argument parser
 
-# Strip namespace from tag
 def strip_namespace(tag):
+    """
+    Strip namespace from tag
+    """
     return tag.split('}')[-1] if '}' in tag else tag
 
-# Travers the DOM tree recursively
+def speaker_counter(meeting_dict):
+    """
+    Count how many times a speaker speechs during a meeting
+    """
+    speakers_counter = []
+    for meeting in meeting_dict['speakers']:
+        speakers_counter.append(dict(Counter(meeting)))
+
+    meeting_dict['speakers'] = speakers_counter
+
+    return meeting_dict
+
 def traverse_tree(element, meeting_dict, update_id):
+    """
+    Travers the DOM tree recursively
+    """
     xmlns='http://www.w3.org/XML/1998/namespace'
     skip_meeting = False
 
@@ -53,11 +70,15 @@ def traverse_tree(element, meeting_dict, update_id):
                    
     for child in element:
         traverse_tree(child, meeting_dict, update_id)
+
 def main():
     """
     Collects meeting informations from the Corpus (XML) and save them into a JSON object.
     """
-    tree = etree.parse('../datasets/Kranjska-xml/Corpus-Kranjska.xml')
+    input_file, output_file = utils.parse_arguments()
+
+    print('Load the Corpus DOM tree...')
+    tree = etree.parse(input_file)
     tree.xinclude()
     root = tree.getroot()
 
@@ -70,33 +91,15 @@ def main():
         'speakers': []
     }
 
+    # Travers the corpus to extract meetings infos
+    print('Travers XML DOM tree...')
     traverse_tree(root, meeting_dict, update_id)
 
     # Count how many times a speaker speechs during a meeting
-    # TODO - Make separate function for readability
-    speakers_counter = []
-    for meeting in meeting_dict['speakers']:
-        speakers_counter.append(dict(Counter(meeting)))
+    meeting_dict = speaker_counter(meeting_dict)
 
-    meeting_dict['speakers'] = speakers_counter
+    utils.save_dict_to_json(meeting_dict, output_file)
 
-    
-    # Save in JSON
-    # TODO - Make separate function for readability
-    data = meeting_dict
-
-    # Define the filename for the JSON file
-    fname = "../cache/out.json"
-    dir = os.path.dirname(fname)
-
-    # Check directory
-    if not os.path.exists(dir):
-        os.makedirs(dir)
-
-    # Write the dictionary to a JSON file
-    with open(fname, "w") as json_file:
-        json.dump(data, json_file)
-    
 
 
 if __name__ == '__main__':
