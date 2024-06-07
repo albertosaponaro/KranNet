@@ -1,0 +1,1 @@
+python src/collect_meetings_info.py -i datasets/Kranjska-xml/Corpus-Kranjska.xml -o cache/meetings_info.json
