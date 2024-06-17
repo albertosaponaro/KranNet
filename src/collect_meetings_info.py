@@ -33,7 +33,7 @@ def traverse_tree(element, meeting_dict, update_id):
     # Regular expression pattern to match the year (four digits)
     pattern = r'\b\d{4}\b'
     
-    # TODO - save elements we want to save else continue the traverse
+    
     if strip_namespace(element.tag) == 'meeting':
             
             if element.text is not None: # sanity check

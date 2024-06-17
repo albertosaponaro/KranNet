@@ -36,9 +36,8 @@ def main():
 
     # Load meeting infos from cache
     df = pd.read_json(input_file)
-    
-    # TODO - Test
-    print('\nPreview DataFrame head... \n', df.head(), '\n')
+    print('\nPreview DataFrame head... \n', df.head(), '\n', 'Number of meetings:', len(df), '\n')
+
 
     # Crate DB
     sql_utils.create_db('krannet')
@@ -46,13 +45,17 @@ def main():
     # Create tables
     create_tables()
 
-    # TODO - Insert data into the tables
+    numb_of_speakers = 0 # sanity check
+
+    # Insert data into DB tables
     for _, row in tqdm(df.iterrows()):
         
         # Insert meeting ito the meeting table
         query = 'INSERT INTO meeting_table (title, year) VALUES (%s, %s)'
         params = (row.title, row.year)
         sql_utils.transition(query, params, verbose=False)
+
+        # TODO - if the transition fails we shouls skeep inserting the meeting --> too much work maybe just delete restriction of 100 CHARS!!!
 
         for speaker, intervention in row.speakers.items():
             
@@ -61,16 +64,16 @@ def main():
             params = (row.id, speaker, intervention)
             sql_utils.transition(query, params, verbose=False)
 
+            numb_of_speakers += 1 # sanity check
+
     
     # Show head of the two tables
     meeting_df = sql_utils.fetch_table_data(table_name='meeting_table')
-    speaker_df = sql_utils.fetch_table_data(table_name='meeting_table')
-    print('\nPreview DataFrame head... \n', meeting_df.head(), '\n')
-    print('\nPreview DataFrame head... \n', speaker_df.head(), '\n')
+    speaker_df = sql_utils.fetch_table_data(table_name='speaker_table')
+    print('\nPreview DataFrame head... \n', meeting_df.head(), '\n', 'Number of meetings:', len(meeting_df), 'of', len(df), '\n') # 564 of 667
+    print('\nPreview DataFrame head... \n', speaker_df.head(), '\n', 'Number of meetings:', len(speaker_df), 'of', numb_of_speakers, '\n')
 
-    # TODO - Check how many transitions failed and take a decisios on what to do about it
-
-    # TODO - Save database or not?!
+    # TODO - Save database or not?! --> Save but how (ISSUES with Postgress and VENV)
 
     # Drop DB
     sql_utils.drop_db('krannet')
