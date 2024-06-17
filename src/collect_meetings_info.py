@@ -1,7 +1,4 @@
 import re
-import json
-import os, argparse
-from pathlib import Path
 from collections import Counter
 from lxml import etree
 import utils

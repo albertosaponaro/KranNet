@@ -58,7 +58,7 @@ def drop_db(dbname):
         if connection:
             connection.close()
 
-def transition(query, params=None, dbname='krannet'):
+def transition(query, params=None, dbname='krannet', verbose=True):
     try:
         # Connect to your PostgreSQL database
         connection = psycopg2.connect(
@@ -81,7 +81,7 @@ def transition(query, params=None, dbname='krannet'):
         # Commit transition
         connection.commit()
 
-        print("Transaction committed successfully.")
+        if verbose: print("Transaction committed successfully.")
 
     except Exception as e:
         connection.rollback()
@@ -105,6 +105,29 @@ def fetch_table_data(table_name, dbname='krannet'):
         
         # Fetch data using pandas
         query = f"SELECT * FROM {table_name}"
+        df = pd.read_sql_query(query, connection)
+        
+        return df
+
+    except Exception as e:
+        print(f"Failed to fetch data: {e}")
+        return None
+
+    finally:
+        if connection:
+            connection.close()
+
+def fetch_data(query, dbname='krannet'):
+    try:
+        # Connect to your PostgreSQL database
+        connection = psycopg2.connect(
+        database=dbname,
+        user='postgres',
+        password='password',
+        host='localhost',
+        port= '5432')
+        
+        # Fetch data using pandas
         df = pd.read_sql_query(query, connection)
         
         return df

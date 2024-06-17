@@ -46,5 +46,13 @@ def save_dict_to_json(data, fname):
         os.makedirs(dir)
 
     # Write the dictionary to a JSON file
-    with open(fname, "w") as json_file:
+    with open(fname, 'w') as json_file:
         json.dump(data, json_file)
+
+def load_dict_from_json(fname):
+
+    # Read the dictionary from a JSON file
+    with open(fname, 'r') as json_file:
+        data = json.load(json_file)
+
+    return data
