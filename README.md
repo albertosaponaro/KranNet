@@ -29,6 +29,10 @@
 
 ## Setup
 
+### PostgresSQL
+ - version: 16.3
+
+
 ### Virtual Env
 
 1. Install Virtual Env:
