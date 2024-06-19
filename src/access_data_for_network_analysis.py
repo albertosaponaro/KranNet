@@ -64,7 +64,7 @@ def main():
     df.to_json(output_file)
     
     # Drop DB
-    #sql_utils.drop_db('krannet')
+    sql_utils.drop_db('krannet')
 
 
 if __name__ == '__main__':
