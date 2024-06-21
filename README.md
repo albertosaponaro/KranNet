@@ -8,6 +8,8 @@
 2. Prepare
 3. Access
 
+*we used Notebooks for test porpuses, take a look at them ;)
+
 ## Download datasets
 
 ### Carniolan Provincial Assembly corpus Kranjska 1.0:
@@ -42,8 +44,11 @@ python3 -m venv .venv
 
 2. Activate Virtual Env:
 ```
-. .venv/bin/activate # for Linux, macOS
-.venv\Scripts\activate # for Windows
+# For Linux and MacOS
+. .venv/bin/activate 
+
+# For Windows
+.venv\Scripts\activate 
 ```
 
 3. Install dependencies:
@@ -64,19 +69,39 @@ The project is divided in three parts. To run them individually execute:
 
 1. Collect:
     ```
+    # For Linux and MacOS
     bash collect.sh
+
+    # Windows
+    cmd.exe /c collect.bat
+
     ```
 2. Prepare:
     ```
+    # For Linux and MacOS
     bash prepare.sh
+
+    # For Windows
+    cmd.exe /c prepare.bat
+
     ```
 3. Access:
     ```
+    # Mac/Linux
     bash access.sh
+    
+    # For Windows
+    cmd.exe /c access.bat
+    
     ````
 
 To run the whole pipeline:
 ```
+# Mac/Linux
 bash run.sh
+
+# Windows
+cmd.exe /c run.bat
+
 ```
 
