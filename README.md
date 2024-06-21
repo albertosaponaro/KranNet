@@ -2,11 +2,35 @@
 *Alberto Saponaro, Francesca Carlon*
 
 ## Description
+The project focuses on text encoding and is based on the Carniolan Provincial Assembly corpus Kranjska 1.0. 
+
+The corpus contains meeting proceedings of the Carniolan Provincial Assembly from 1861 to 1913, with a total of 694 sessions.
+
+Its main goal is to encode XML into SQL and access the data for social network analysis.
+The analysis of network interactions among the participants gives an overview of the social network within the meetings.
+
 
 ### Phases
 1. Collect
+    - The corpus is in XML format. 
+    - A DOM parser is used to load the corpus. 
+    - Creates the meeting ID.
+    - Extract from Corpus:
+        - Meetings titles
+        - Years
+        - Speakers name
+        - Number of speakers’ interventions
+    - Makes cache after collect phase
+
 2. Prepare
+    - Creates SQL database
+    - Creates tables
+        - Meeting table (title and year)
+        - Speaker table (name and number of interventions)
+    - Populate the tables 
+
 3. Access
+    - SQL query to access data needed for the network analysis 
 
 *we used Notebooks for test porpuses, take a look at them ;)
 
@@ -65,6 +89,9 @@ deactivate
 ```
 
 ## How To Run
+
+**!!!Before running the code!!!** Make sure the database is online.
+
 The project is divided in three parts. To run them individually execute:
 
 1. Collect:

@@ -1,3 +1,3 @@
 bash collect.sh
-bash prepere.sh
+bash prepare.sh
 bash access.sh
