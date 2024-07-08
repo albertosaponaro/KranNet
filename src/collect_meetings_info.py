@@ -62,8 +62,17 @@ def traverse_tree(element, meeting_dict, update_id):
          if element.text is not None: # sanity check
               if element.attrib.get(f'type') == 'speaker':
                    
-                   # update list of spekers
-                   meeting_dict['speakers'][-1].append(element.text)
+                   # update list of spekers (try to handel inconsistency)
+                    if  re.search('^Präsident *', element.text):
+                        meeting_dict['speakers'][-1].append('Präsident')
+                    elif re.search('Dräsident', element.text):
+                         meeting_dict['speakers'][-1].append('Präsident')
+                    else:
+                        if element.text[-1] in [':', '.']: 
+                             meeting_dict['speakers'][-1].append(element.text[:-1])
+                        else:
+                            meeting_dict['speakers'][-1].append(element.text)
+
                    
     for child in element:
         traverse_tree(child, meeting_dict, update_id)

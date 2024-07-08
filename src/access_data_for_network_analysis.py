@@ -18,7 +18,7 @@ def restore_krannet_db_from_backup(backup_path, verbose=True):
     if verbose: print('\nPreview DataFrame head... \n', speaker_df.head(), '\n', 'Number of meetings:', len(speaker_df))
 
     # Restore 'meeting_table'
-    for _, row in tqdm(meeting_df.iterrows()):
+    for _, row in tqdm(meeting_df.iterrows(), desc='Restore meeting_table', total=len(meeting_df)):
         query = """INSERT INTO meeting_table (meeting_id, title, year) VALUES (%s, %s, %s)"""
         params = (row.meeting_id, row.title, row.year)
         sql_utils.transition(query, params, verbose=False)
@@ -28,7 +28,7 @@ def restore_krannet_db_from_backup(backup_path, verbose=True):
     if verbose: print('\nPreview DataFrame head... \n', meeting_df.head(), '\n', 'Number of meetings:', len(meeting_df))
 
     # Restore 'speaker_table'
-    for _, row in tqdm(speaker_df.iterrows()):
+    for _, row in tqdm(speaker_df.iterrows(), desc='Restore speaker_table:'):
         query = """INSERT INTO speaker_table (speaker_id, meeting_id, speaker_name, interventions) VALUES (%s, %s, %s, %s)"""
         params = (row.speaker_id, row.meeting_id, row.speaker_name, row.interventions)
         sql_utils.transition(query, params, verbose=False)
