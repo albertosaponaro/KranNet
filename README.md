@@ -2,11 +2,7 @@
 *Alberto Saponaro, Francesca Carlon*
 
 ## Description
-The project focuses on text encoding and is based on the Carniolan Provincial Assembly corpus Kranjska 1.0. 
-
-The corpus contains meeting proceedings of the Carniolan Provincial Assembly from 1861 to 1913, with a total of 694 sessions.
-
-Its main goal is to encode XML into SQL and access the data for social network analysis.
+The project focuses on text encoding and is based on the Carniolan Provincial Assembly corpus Kranjska 1.0. The corpus contains meeting proceedings of the Carniolan Provincial Assembly from 1861 to 1913, with a total of 694 sessions. Its main goal is to encode XML into SQL and access the data for social network analysis.
 The analysis of network interactions among the participants gives an overview of the social network within the meetings.
 
 
@@ -119,6 +115,15 @@ The project is divided in three parts. To run them individually execute:
     
     # For Windows
     cmd.exe /c access.bat
+    
+    ````
+4. Network Analysis:
+    ```
+    # Mac/Linux
+    bash network_analysis.sh
+    
+    # For Windows
+    cmd.exe /c network_analysis.bat
     
     ````
 

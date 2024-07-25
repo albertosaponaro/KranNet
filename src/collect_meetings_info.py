@@ -33,7 +33,7 @@ def traverse_tree(element, meeting_dict, update_id):
     # Regular expression pattern to match the year (four digits)
     pattern = r'\b\d{4}\b'
     
-    
+    # If 'meeting' create meeting in meeting_dict
     if strip_namespace(element.tag) == 'meeting':
             
             if element.text is not None: # sanity check
@@ -56,7 +56,7 @@ def traverse_tree(element, meeting_dict, update_id):
                     else: 
                         skip_meeting = True
 
-
+    # If 'note' append the speaker in the speakers list to the corresponding meeting
     if strip_namespace(element.tag) == 'note' and not skip_meeting:
          
          if element.text is not None: # sanity check

@@ -11,7 +11,6 @@ def main():
     df = pd.read_json(input_file)
     print('\nPreview DataFrame head... \n', df.head(), '\n', 'Number of meetings:', len(df), '\n')
 
-
     # Crate DB
     sql_utils.create_db('krannet')
 
@@ -28,20 +27,18 @@ def main():
         params = (row.title, row.year)
         sql_utils.transition(query, params, verbose=False)
 
-        
         for speaker, intervention in row.speakers.items():
-            
             # Insert speakers into the speakers table
             query = 'INSERT INTO speaker_table (meeting_id, speaker_name, interventions) VALUES (%s, %s, %s)'
             params = (row.id, speaker, intervention)
             sql_utils.transition(query, params, verbose=False)
-
             numb_of_speakers += 1 # sanity check
 
-    
-    # Show head of the two tables
+    # Store database tables into a DataFrame
     meeting_df = sql_utils.fetch_table_data(table_name='meeting_table')
     speaker_df = sql_utils.fetch_table_data(table_name='speaker_table')
+    
+    # Show head of the two tables
     print('\nPreview DataFrame head... \n', meeting_df.head(), '\n', 'Number of meetings:', len(meeting_df), 'of', len(df), '\n')
     print('\nPreview DataFrame head... \n', speaker_df.head(), '\n', 'Number of meetings:', len(speaker_df), 'of', numb_of_speakers, '\n')
 
@@ -52,8 +49,6 @@ def main():
 
     # Drop DB
     sql_utils.drop_db('krannet')
-    
-
 
 if __name__ == '__main__':
     main()

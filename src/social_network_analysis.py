@@ -1,4 +1,4 @@
-import env, utils, sql_utils
+import utils
 import networkx as nx
 import matplotlib.pyplot as plt
 import pandas as pd

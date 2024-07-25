@@ -1,7 +1,5 @@
 import sql_utils
 
-#krannet_connection = ...
-
 def create_krannet_tables():
     # SQL queries to create the tables
     create_meeting_table = """

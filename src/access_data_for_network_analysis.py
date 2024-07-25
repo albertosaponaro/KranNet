@@ -4,6 +4,9 @@ from tqdm import tqdm
 
 
 def restore_krannet_db_from_backup(backup_path, verbose=True):
+    """
+    Restore DB from a backup
+    """
     
     # Restore database and tables
     sql_utils.create_db('krannet')
@@ -43,9 +46,11 @@ def restore_krannet_db_from_backup(backup_path, verbose=True):
 
 def main():
     cache_dir, output_file = utils.parse_arguments()
+    
+    # Restore DB
     restore_krannet_db_from_backup(cache_dir)
     
-
+    # Access only the data needed for the social network analysis
     query = """
     SELECT DISTINCT
         M.year AS year,
@@ -58,9 +63,11 @@ def main():
         M.year IN ('1861', '1862');
     """
 
+    # save accessed data into a DataFrame
     df = sql_utils.fetch_data(query)
     print(df.head(), '\nLength: ', len(df))
 
+    # Chache accessed data
     df.to_json(output_file)
     
     # Drop DB
